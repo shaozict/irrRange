@@ -1,0 +1,18 @@
+/*  range样式  首付  */
+.shouFu { margin-bottom: 50px;margin-top: 50px;}
+.shouFu_range { margin-left: 74px;font: 14px/30px "microsoft yahei";color: #333333;position: relative;}
+.rangeBox { position: relative;display: inline-block;}
+.rangeAxis { position: relative;padding: 10px;}
+.rangeAxis li { float: left;display: block;height: 4px;background-color: #e5e5e5;position: relative;}
+.rangeAxis li i { display: block;background-color: #ffffff;width: 5px;height: 5px;border-radius: 4px;position: absolute;left: 0px;top: 0px;background: url(../images/search_btn.png) no-repeat -9px -20px;z-index: 10;}
+.rangeSlect { position: absolute;top: 10px;left: 15px;width: 760px;height: 4px;background-color: #fc6621;}
+.rangeSlect span { width: 20px;height: 20px;font: 16px/20px "microsoft yahei";color: #000000;background-color: #FFFFFF;border-radius: 10px;text-align: center;}
+.rangeSlect .front { position: absolute;left: -10px;top: -4px;width: 20px;height: 12px;background: url(../images/search_btn.png) no-repeat -4px -4px;z-index: 20;}
+.rangeSlect .back { position: absolute;right: -10px;top: -4px;width: 20px;height: 12px;background: url(../images/search_btn.png) no-repeat -4px -4px;z-index: 20;}
+.slectNumber01 { text-align: center;background-color: #FFFFFF;color: #666666;width: 140px;margin: 0 auto;}
+.showNumber { position: absolute;left: 382px;top: -45px;border: 1px solid #bcbcbc;width: 140px;margin-left: -70px;}
+.showNumber i { position: absolute;width: 22px;height: 16px;left: 50%;margin-left: -11px;bottom: -16px;background: url(../images/search_btn.png) -25px -5px;}
+/*  range样式  月供  */
+.monthFu_range { margin-left: 74px;font: 14px/30px "microsoft yahei";color: #333333;position: relative;}
+.monthFu { margin-bottom: 10px;}
+.slectNumber02 { text-align: center;background-color: #FFFFFF;color: #666666;width: 140px;margin: 0 auto;}
