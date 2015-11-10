@@ -1,4 +1,4 @@
-(function($) {
+define(['jquery'],function(require, exports, module) {
 	$.fn.range = function() {
 		var $this = $(this);
 		var dropYJ = false;
@@ -156,28 +156,6 @@
 		return ws;
 	}
 	var Range = (function() {
-		var showNumber = (function() { //数值显示
-			var _text;
-			var toWan = function(index) { //大于1000转化单位 万元,保留一位小数;小于10000，单位元
-				if (index >= 10000) {
-					return (index / 10000).toFixed(1) + "万元";
-				} else {
-					return index + "元";
-				}
-			}
-			return function(minNumber, maxNumber, frontNumber, backNumber) {
-				if (backNumber == 0 && frontNumber == 0) {
-					_text = toWan(minNumber) + "~" + toWan(maxNumber);
-				} else if (frontNumber == 0) {
-					_text = toWan(backNumber) + "以下";
-				} else if (backNumber == 0) {
-					_text = toWan(frontNumber) + "以上";
-				} else {
-					_text = toWan(frontNumber) + "~" + toWan(backNumber);
-				}
-				return _text;
-			}
-		})();
 		var nearby = function(x1, x2) { //就近赋值
 			return function(am) {
 				Math.abs(x1 - am) < Math.abs(x2 - am) ? (x1 = am) : (x2 = am);
@@ -211,12 +189,6 @@
 				return Math.floor((scale * xm - scale * x1) / tSec) * tSec + y1;
 			}
 		}
-		var relativeValue = function(relM, relN, val) {
-			relM = parseFloat(relM)
-			relN = parseFloat(relN);
-			val = parseFloat(val);
-			return relM / 2 + relN / 2 - val;
-		}
 		var floorArr = function(arrays, val) { // 从小到大顺序排列数组向下取最大元素值
 			for (var i = arrays.length; i >= 0; i--) {
 				if (val >= arrays[i]) {
@@ -235,13 +207,11 @@
 			return false;
 		}
 		return {
-			"showNumber": showNumber,
 			"nearby": nearby,
 			"spanvalue": spanvalue,
 			"linearMapping": linearMapping,
-			"relativeValue": relativeValue,
 			"floorArr": floorArr,
 			"customFun": customFun
 		}
 	})();
-})(jQuery);
+});

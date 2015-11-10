@@ -50,81 +50,32 @@
 				</div>
 			</div>
 		</div>
-		<!-- 月供条件筛选 -->
-		<div class="monthFu co_box">
-			<h4>月供 :</h4>
-			<div class="monthFu_range">
-				<div id="monthFuRange" class="rangeBox">
-					<a>
-						<div class="rangeAxis">
-							<ul>
-								<li data-interval="0-0-1" style="width: 10px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></li>
-								<li data-interval="0-1000-200" style="width: 120px;"><i></i></li>
-								<li data-interval="1000-3000-400" style="width: 120px;"><i></i></li>
-								<li data-interval="3000-5000-400" style="width: 120px;"><i></i></li>
-								<li data-interval="5000-10000-1000" style="width: 120px;"><i></i></li>
-								<li data-interval="10000-20000-2000" style="width: 120px;"><i></i></li>
-								<li data-interval="20000-50000-6000" style="width: 120px;"><i></i></li>
-								<li data-interval="50000-0-1" style="width: 40px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><i></i></li>
-							</ul>
-						</div>
-						<div class="rangeSlect">
-							<span class="front"></span>
-							<span class="back"></span>
-						</div>
-					</a>
-				</div>
-				<div class="cf">
-					<ul>
-						<li style="float: left;margin-left: -6px;width: 120px;text-align: left;">0元</li>
-						<li style="float: left;width: 120px;text-align: left;">1000元</li>
-						<li style="float: left;width: 120px;text-align: left;">3000元</li>
-						<li style="float: left;width: 120px;text-align: left;">5000元</li>
-						<li style="float: left;width: 120px;text-align: left;">10000元</li>
-						<li style="float: left;width: 110px;text-align: left;">20000元</li>
-						<li style="float: left;width: 64px;text-align: left;">50000元</li>
-						<li style="float: left;text-align: left;">不限</li>
-					</ul>
-				</div>
-				<div id="showMonthFu" class="showNumber">
-					<p class="slectNumber02">0元~5.0万元</p><i></i>
-				</div>
-			</div>
 		</div>
-		</div>
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="js/range.js"></script>
+		<script type="text/javascript" src="js/sea.js"></script>
 		<script>
-			var $showShouFu = $("#showShouFu");
-			var $shouRangeSlect = $("#shouFuRange").find(".rangeSlect");
-			$("#shouFuRange").range();
-			$("#shouFuRange").on("change", function(event, args) {
-				var frontNumber = args.frontNumber,
-					backNumber = args.backNumber,
-					slectFrontX = args.slectFrontX,
-					slectBackX = args.slectBackX;
-				$shouRangeSlect.offset({
-					"left": slectFrontX
-				});
-				$shouRangeSlect.width(Math.abs(slectBackX - slectFrontX));
-				_text = Range.showNumber(0, 500000, frontNumber, backNumber);
-				$showShouFu.css("left", Range.relativeValue(slectFrontX, slectBackX, 84)).find("p").text(_text);
+			seajs.config({
+				base:"./js",
+				alias: {
+					'jquery': "jquery-1.11.2.min"
+				}
 			});
-			var $showMonthFu = $("#showMonthFu");
-			var $monthRangeSlect = $("#monthFuRange").find(".rangeSlect");
-			$("#monthFuRange").range();
-			$("#monthFuRange").on("change", function(event, args) {
-				var frontNumber = args.frontNumber,
-					backNumber = args.backNumber,
-					slectFrontX = args.slectFrontX,
-					slectBackX = args.slectBackX;
-				$monthRangeSlect.offset({
-					"left": slectFrontX
+			seajs.use(["sea-range", "money", "jquery"], function(range, money) {
+				var $showShouFu = $("#showShouFu");
+				var $shouRangeSlect = $("#shouFuRange").find(".rangeSlect");
+				$("#shouFuRange").range();
+				$("#shouFuRange").on("change", function(event, args) {
+					var frontNumber = args.frontNumber,
+						backNumber = args.backNumber,
+						slectFrontX = args.slectFrontX,
+						slectBackX = args.slectBackX;
+					$shouRangeSlect.offset({
+						"left": slectFrontX
+					});
+					$shouRangeSlect.width(Math.abs(slectBackX - slectFrontX));
+					_text = money.showNumber(0, 500000, frontNumber, backNumber);
+					$showShouFu.css("left", money.relativeValue(slectFrontX, slectBackX, 84)).find("p").text(_text);
 				});
-				$monthRangeSlect.width(Math.abs(slectBackX - slectFrontX));
-				_text = Range.showNumber(0, 500000, frontNumber, backNumber);
-				$showMonthFu.css("left", Range.relativeValue(slectFrontX, slectBackX, 84)).find("p").text(_text);
-			});
+			})
 		</script>
 	</body>
 
