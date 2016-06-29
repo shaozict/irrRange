@@ -1,41 +1,37 @@
-function IrrRange(parm) {
-	this.parm = $.extend({
-		parElement: "#box",
-	}, parm);
-	this.$display = $("#screen");
-	this.$range = $("#range");
-	this.$slect = $("#range").find(".select");
-	this.vis = {};
-	this.select = {};
-	this.map = {};
+function IrrRange(tar) {
+	this.$range = $(tar);
+	this.data = {
+		vis: {},
+		map: {},
+		select: {}
+	};
+	this.init();
 }
 IrrRange.prototype = {
-	init:function(){
-		this.getdata();
+	init: function() {
+		this.setdata();
 		this.range();
 	},
-	getdata: function() {
+	setdata: function() {
 		var $li = this.$range.find("ul").eq(0).find("li");
-		//获取所有独立区间左值 
-		//获取所有独立区间左值
-		this.vis = {
-			left: $li.offsetLefts(),
-			width: $li.widthS(),
-			right: Array.addArray(vis.left, vis.width),
-			min: vis.left[0],
-			max: vis.right[vis.right.length - 1]
-		}
-		this.select = {
-			sf: vis.min,
-			sb: vis.max,
+		var vis = this.data.vis;
+		vis.left =  IrrRange.tools.offsetLefts($li);
+		vis.width = IrrRange.tools.widths($li);
+		vis.right = IrrRange.tools.addArray(this.data.vis.left, this.data.vis.width);
+		vis.min = vis.left[0];
+		vis.max = vis.right[this.data.vis.right.length - 1];
+		this.data.select = {
+			sf: this.data.vis.min,
+			sb: this.data.vis.max,
 			mf: new Number(),
 			mb: new Number()
-		}
-		this.map = {
+		};
+		this.data.map = {
 			left: [],
 			right: [],
 			width: [],
-		}
+		};
+		var map = this.data.map;
 		$li.each(function(i, arr) {
 			var data = $(arr).attr("data-interval").split("-");
 			map.left[i] = data[0];
@@ -45,14 +41,16 @@ IrrRange.prototype = {
 	},
 	range: function() {
 		var $range = this.$range;
-		var select = this.select;
+		var vis = this.data.vis;
+		var map = this.data.map;
+		var select = this.data.select;
 		var tools = IrrRange.tools;
 		var dropYJ = false;
 		$range.on({
 			"mousedown": function() {
 				var event = event || window.event;
 				dropYJ = true;
-				$this.trigger("changeOffset", event.clientX);
+				$range.trigger("changeOffset", event.clientX);
 				return false;
 			},
 			"changeOffset": function(event, pClientX) {
@@ -60,8 +58,9 @@ IrrRange.prototype = {
 				//获取当前取值区间左坐标
 				//获取当前取值区间右坐标
 				var s = tools.nearby(select.sf, select.sb)(pClientX);
-				select.sf = tools.spanvalue(vis.min, vis.max)(s.x1); 
+				select.sf = tools.spanvalue(vis.min, vis.max)(s.x1);
 				select.sb = tools.spanvalue(vis.min, vis.max)(s.x2);
+
 				function offTomap(xun) {
 					var off = tools.floorArr(vis.left, xun);
 					var x1 = off.val,
@@ -69,14 +68,14 @@ IrrRange.prototype = {
 						y1 = map.left[off.index],
 						y2 = map.right[off.index],
 						tSec = map.width[off.index];
-					var yun = (map.right[off.index] == 0) ? 0 : parseInt(Range.linearMapping(x1, x2, y1, y2, tSec)(xun));
+					var yun = (map.right[off.index] == 0) ? 0 : parseInt(tools.linearMapping(x1, x2, y1, y2, tSec)(xun));
 					return yun;
 				}
 				//计算取值区间左坐标的映射值
-				var select.mf = offTomap(select.sf);
+				select.mf = offTomap(select.sf);
 				//计算取值区间右坐标的映射值
-				var select.mb = offTomap(select.sb);
-				$this.trigger("change", select);
+				select.mb = offTomap(select.sb);
+				$range.trigger("change", select);
 				return select;
 			}
 		});
@@ -193,87 +192,6 @@ IrrRange.tools = {
 		return array3;
 	}
 };
-IrrRange.show = {
-	"showNumber": (function() { //数值显示
-		var _text;
-		var toWan = function(index) { //大于1000转化单位 万元,保留一位小数;小于10000，单位元
-			if (index >= 10000) {
-				return (index / 10000).toFixed(1) + "万元";
-			} else {
-				return index + "元";
-			}
-		}
-		return function(minNumber, maxNumber, frontNumber, backNumber) {
-			if (frontNumber == 0 && backNumber > maxNumber) {
-				_text = "不限";
-			} else if (frontNumber == 0) {
-				_text = toWan(backNumber) + "以下";
-			} else if (frontNumber >= maxNumber) {
-				_text = toWan(maxNumber) + "以上";
-			} else if (backNumber > maxNumber) {
-				_text = toWan(frontNumber) + "以上";
-			} else {
-				_text = toWan(frontNumber) + "~" + toWan(backNumber);
-			}
-			return _text;
-		}
-	})(),
-	"relativeValue": function(relM, relN, val) {
-		relM = parseFloat(relM)
-		relN = parseFloat(relN);
-		val = parseFloat(val);
-		return relM / 2 + relN / 2 - val;
-	},
-	"select": function(args) { //回调函数，操作dom首付显示
-		var frontNumber = args.frontNumber,
-			backNumber = args.backNumber,
-			slectFrontX = args.slectFrontX,
-			slectBackX = args.slectBackX;
-		$shouRangeSlect.offset({
-			"left": slectFrontX
-		});
-		$shouRangeSlect.width(Math.abs(slectBackX - slectFrontX));
-		_text = showObj.showNumber(0, 500000, frontNumber, backNumber);
-		$showShouFu.css("left", showObj.relativeValue(slectFrontX, slectBackX, s_val)).find("p").text(_text);
-	}
-}
 
+new IrrRange("#irr-range");
 
-function showline(){
-	
-}
-
-
-
-
-
-
-//月供
-var $showMonthFu = $("#showMonthFu"),
-	$monthFuRange = $("#monthFuRange"),
-	$monthFuRangeSlect = $("#monthFuRange").find(".rangeSlect");
-var Month = $monthFuRange.range();
-var m_val = $monthFuRange.offset().left;
-
-function monthDOM(args) { //回调函数，操作dom月供显示
-	var frontNumber = args.frontNumber,
-		backNumber = args.backNumber,
-		slectFrontX = args.slectFrontX,
-		slectBackX = args.slectBackX;
-	$monthFuRangeSlect.offset({
-		"left": slectFrontX
-	});
-	$monthFuRangeSlect.width(Math.abs(slectBackX - slectFrontX));
-	_text = showObj.showNumber(0, 50000, frontNumber, backNumber);
-	$showMonthFu.css("left", showObj.relativeValue(slectFrontX, slectBackX, m_val)).find("p").text(_text);
-}
-$monthFuRange.on("change", function(event, args) {
-	monthDOM(args);
-});
-
-//设置首付、月供默认范围
-window.onload = function() {
-	//设置月供默认范围
-	var argsm = Month.appointRange(1000, 20000);
-	monthDOM(argsm);
-};
