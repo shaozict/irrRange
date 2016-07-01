@@ -1,5 +1,7 @@
 irrRange插件，满足取值区间不规则
 
+irrRange-2.0.js
+
 //建立滑块实例
 var irr = new IrrRange();
 //设置滑块取值区间
