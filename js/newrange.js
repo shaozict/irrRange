@@ -10,7 +10,7 @@ function IrrRange(parm) {
 	this.map = {};
 }
 IrrRange.prototype = {
-	init:function(){
+	init: function() {
 		this.getdata();
 		this.range();
 	},
@@ -60,8 +60,9 @@ IrrRange.prototype = {
 				//获取当前取值区间左坐标
 				//获取当前取值区间右坐标
 				var s = tools.nearby(select.sf, select.sb)(pClientX);
-				select.sf = tools.spanvalue(vis.min, vis.max)(s.x1); 
+				select.sf = tools.spanvalue(vis.min, vis.max)(s.x1);
 				select.sb = tools.spanvalue(vis.min, vis.max)(s.x2);
+
 				function offTomap(xun) {
 					var off = tools.floorArr(vis.left, xun);
 					var x1 = off.val,
@@ -119,7 +120,18 @@ IrrRange.prototype = {
 			var yun = (map.right[off.index] == 0) ? 0 : parseInt(Range.linearMapping(x1, x2, y1, y2, tSec)(xun));
 			return yun;
 		}
+	},
+	showline: function() {
+		var $range = this.$range;
+		var $select = this.$select;
+		$range.on("change", function(event, select) {
+			$this.offset({
+				"left": select.sf
+			});
+			$monthFuRangeSlect.width(Math.abs(select.sb - select.sf));
+		});
 	}
+
 };
 IrrRange.tools = {
 	"nearby": function(x1, x2) { //就近赋值
@@ -238,15 +250,11 @@ IrrRange.show = {
 	}
 }
 
+function showline() {
+	var irrRange = new IrrRange("#irr-range");
+	$monthFuRangeSlect = $("#monthFuRange").find(".rangeSlect");
 
-function showline(){
-	
 }
-
-
-
-
-
 
 //月供
 var $showMonthFu = $("#showMonthFu"),

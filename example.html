@@ -9,13 +9,13 @@
 	</head>
 
 	<body>
-		<!-- 筛选 -->
+		<!-- 首付条件筛选 -->
 		<div class="shouFu co_box">
-			
+			<h4>首付 :</h4>
 			<div class="shouFu_range">
 				<div id="shouFuRange" class="rangeBox">
 					<a>
-						<div id="irr-range" class="rangeAxis">
+						<div class="rangeAxis">
 							<ul>
 								<li data-interval="0-0-1" style="width: 10px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></li>
 								<li data-interval="0-10000-2000" style="width: 120px;"><i></i></li>
@@ -27,7 +27,7 @@
 								<li data-interval="500000-0-1" style="width: 40px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><i></i></li>
 							</ul>
 						</div>
-						<div id="line" class="rangeSlect">
+						<div class="rangeSlect">
 							<span class="front"></span>
 							<span class="back"></span>
 						</div>
@@ -50,9 +50,33 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="js/irrRange.js"></script>
-	
+		</div>
+		<script type="text/javascript" src="js/sea.js"></script>
+		<script>
+			seajs.config({
+				base:"./js",
+				alias: {
+					'jquery': "jquery-1.11.2.min"
+				}
+			});
+			seajs.use(["sea-range", "money", "jquery"], function(range, money) {
+				var $showShouFu = $("#showShouFu");
+				var $shouRangeSlect = $("#shouFuRange").find(".rangeSlect");
+				$("#shouFuRange").range();
+				$("#shouFuRange").on("change", function(event, args) {
+					var frontNumber = args.frontNumber,
+						backNumber = args.backNumber,
+						slectFrontX = args.slectFrontX,
+						slectBackX = args.slectBackX;
+					$shouRangeSlect.offset({
+						"left": slectFrontX
+					});
+					$shouRangeSlect.width(Math.abs(slectBackX - slectFrontX));
+					_text = money.showNumber(0, 500000, frontNumber, backNumber);
+					$showShouFu.css("left", money.relativeValue(slectFrontX, slectBackX, 84)).find("p").text(_text);
+				});
+			})
+		</script>
 	</body>
 
 </html>

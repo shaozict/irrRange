@@ -1,4 +1,6 @@
-不均匀Range插件
+irrRange插件，满足取值区间不规则
 
-1.$.range()   根据视觉长度映射逻辑取值
-2.$.appointRange()  根据逻辑取值映射视觉长度
+//建立滑块实例
+var irr = new IrrRange();
+//设置滑块取值区间
+irr.appointRange([50,2000]);

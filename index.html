@@ -9,74 +9,73 @@
 	</head>
 
 	<body>
-		<!-- 首付条件筛选 -->
-		<div class="shouFu co_box">
-			<h4>首付 :</h4>
-			<div class="shouFu_range">
-				<div id="shouFuRange" class="rangeBox">
-					<a>
-						<div class="rangeAxis">
-							<ul>
-								<li data-interval="0-0-1" style="width: 10px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></li>
-								<li data-interval="0-10000-2000" style="width: 120px;"><i></i></li>
-								<li data-interval="10000-20000-2000" style="width: 120px;"><i></i></li>
-								<li data-interval="20000-50000-6000" style="width: 120px;"><i></i></li>
-								<li data-interval="50000-100000-10000" style="width: 120px;"><i></i></li>
-								<li data-interval="100000-200000-20000" style="width: 120px;"><i></i></li>
-								<li data-interval="200000-500000-60000" style="width: 120px;"><i></i></li>
-								<li data-interval="500000-0-1" style="width: 40px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><i></i></li>
-							</ul>
-						</div>
-						<div class="rangeSlect">
-							<span class="front"></span>
-							<span class="back"></span>
-						</div>
-					</a>
-				</div>
-				<div class="cf">
+		<div class="box">
+			<div id="irr-range1" class="range">
+				<div data-class="slot" class="slot">
 					<ul>
-						<li style="float: left;margin-left: 10px;width: 120px;text-align: left;">0万</li>
-						<li style="float: left;width: 120px;text-align: left;">1万</li>
-						<li style="float: left;width: 120px;text-align: left;">2万</li>
-						<li style="float: left;width: 120px;text-align: left;">5万</li>
-						<li style="float: left;width: 120px;text-align: left;">10万</li>
-						<li style="float: left;width: 120px;text-align: left;">20万</li>
-						<li style="float: left;width: 40px;text-align: left;">50万</li>
-						<li style="float: left;text-align: left;">不限</li>
+						<li data-interval="0-0-1" style="width: 10px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></li>
+						<li data-interval="0-10-2" style="width: 120px;"><i></i></li>
+						<li data-interval="10-20-2" style="width: 120px;"><i></i></li>
+						<li data-interval="20-50-6" style="width: 120px;"><i></i></li>
+						<li data-interval="50-100-10" style="width: 120px;"><i></i></li>
+						<li data-interval="100-200-20" style="width: 120px;"><i></i></li>
+						<li data-interval="200-500-60" style="width: 120px;"><i></i></li>
+						<li data-interval="500-520-1" style="width: 40px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><i></i></li>
 					</ul>
 				</div>
-				<div id="showShouFu" class="showNumber">
-					<p class="slectNumber01">0元~50.0万元</p><i></i>
+				<div data-class="line" class="line">
+					<span class="front"></span>
+					<span class="back"></span>
 				</div>
 			</div>
+			<div class="cf">
+				<ul>
+					<li style="float: left;margin-left: 5px;width: 120px;text-align: left;">0</li>
+					<li style="float: left;width: 120px;text-align: left;">10</li>
+					<li style="float: left;width: 120px;text-align: left;">20</li>
+					<li style="float: left;width: 120px;text-align: left;">50</li>
+					<li style="float: left;width: 120px;text-align: left;">100</li>
+					<li style="float: left;width: 120px;text-align: left;">200</li>
+					<li style="float: left;width: 40px;text-align: left;">500</li>
+					<li style="float: left;text-align: left;">不限</li>
+				</ul>
+			</div>
 		</div>
+		<div class="box">
+			<p style="padding-bottom: 20px;">设置取值区间:[50,2000]</p>
+			<div id="irr-range2" class="range">
+				<div data-class="slot" class="slot">
+					<ul>
+						<li data-interval="0-0-1" style="width: 10px;border-top-left-radius: 5px;border-bottom-left-radius: 5px;"></li>
+						<li data-interval="0-10-2" style="width: 120px;"><i></i></li>
+						<li data-interval="10-20-2" style="width: 120px;"><i></i></li>
+						<li data-interval="20-50-6" style="width: 120px;"><i></i></li>
+						<li data-interval="50-100-10" style="width: 120px;"><i></i></li>
+						<li data-interval="100-200-20" style="width: 120px;"><i></i></li>
+						<li data-interval="200-500-60" style="width: 120px;"><i></i></li>
+						<li data-interval="500-520-1" style="width: 40px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;"><i></i></li>
+					</ul>
+				</div>
+				<div data-class="line" class="line">
+					<span class="front"></span>
+					<span class="back"></span>
+				</div>
+			</div>
+			<div class="cf">
+				<ul>
+					<li style="float: left;margin-left: 5px;width: 120px;text-align: left;">0</li>
+					<li style="float: left;width: 120px;text-align: left;">10</li>
+					<li style="float: left;width: 120px;text-align: left;">20</li>
+					<li style="float: left;width: 120px;text-align: left;">50</li>
+					<li style="float: left;width: 120px;text-align: left;">100</li>
+					<li style="float: left;width: 120px;text-align: left;">200</li>
+					<li style="float: left;width: 40px;text-align: left;">500</li>
+					<li style="float: left;text-align: left;">不限</li>
+				</ul>
+			</div>
 		</div>
-		<script type="text/javascript" src="js/sea.js"></script>
-		<script>
-			seajs.config({
-				base:"./js",
-				alias: {
-					'jquery': "jquery-1.11.2.min"
-				}
-			});
-			seajs.use(["sea-range", "money", "jquery"], function(range, money) {
-				var $showShouFu = $("#showShouFu");
-				var $shouRangeSlect = $("#shouFuRange").find(".rangeSlect");
-				$("#shouFuRange").range();
-				$("#shouFuRange").on("change", function(event, args) {
-					var frontNumber = args.frontNumber,
-						backNumber = args.backNumber,
-						slectFrontX = args.slectFrontX,
-						slectBackX = args.slectBackX;
-					$shouRangeSlect.offset({
-						"left": slectFrontX
-					});
-					$shouRangeSlect.width(Math.abs(slectBackX - slectFrontX));
-					_text = money.showNumber(0, 500000, frontNumber, backNumber);
-					$showShouFu.css("left", money.relativeValue(slectFrontX, slectBackX, 84)).find("p").text(_text);
-				});
-			})
-		</script>
+		<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="js/irrRange-2.0.js"></script>
 	</body>
 
 </html>

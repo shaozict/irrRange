@@ -1,5 +1,7 @@
 function IrrRange(tar) {
 	this.$range = $(tar);
+	this.$slot = $(tar).find("[data-class='slot']");
+	this.$line= $(tar).find("[data-class='line']");
 	this.data = {
 		vis: {},
 		map: {},
@@ -11,9 +13,10 @@ IrrRange.prototype = {
 	init: function() {
 		this.setdata();
 		this.range();
+		this.showline();
 	},
 	setdata: function() {
-		var $li = this.$range.find("ul").eq(0).find("li");
+		var $li = this.$slot.find("ul").eq(0).find("li");
 		var vis = this.data.vis;
 		vis.left =  IrrRange.tools.offsetLefts($li);
 		vis.width = IrrRange.tools.widths($li);
@@ -38,6 +41,8 @@ IrrRange.prototype = {
 			map.right[i] = data[1];
 			map.width[i] = data[2];
 		});
+		map.min = map.left[0];
+		map.max = map.right[map.right.length - 1];
 	},
 	range: function() {
 		var $range = this.$range;
@@ -87,37 +92,44 @@ IrrRange.prototype = {
 			"mousemove": function(event) {
 				if (dropYJ) {
 					var event = event || window.event;
-					$this.trigger("changeOffset", event.clientX);
+					$range.trigger("changeOffset", event.clientX);
 				}
 				return false;
 			}
 		});
 	},
-	appointRange: function() {
-		//计算视觉前坐标font
-		var yf = mapTooff(xf);
-		//计算视觉后坐标back
-		var yb = mapTooff(xb);
-		//标注视觉前、后坐标
-		slectFrontX = yf
-		slectBackX = yb;
-		return {
-			"frontNumber": xf,
-			"backNumber": xb,
-			"slectFrontX": yf,
-			"slectBackX": yb
-		};
-
-		function mapTooff(xun) {
-			var off = Range.floorArr(map.left, xun);
+	appointRange: function(arg,callback) {
+		var vis = this.data.vis;
+		var map = this.data.map;
+		var select = this.data.select;
+		var tools = IrrRange.tools;
+		select.mf = tools.spanvalue(map.min, map.max)(arg[0]);
+		select.mb = tools.spanvalue(map.min, map.max)(arg[1]);
+		select.sf = setvis(select.mf);
+		select.sb = setvis(select.mb);
+		this.$range.trigger("change");
+		return select;
+		function setvis(xun) {
+			var off = tools.floorArr(map.left, xun);
 			var x1 = off.val,
 				x2 = map.right[off.index],
 				y1 = vis.left[off.index],
 				y2 = vis.right[off.index],
 				tSec = map.width[off.index];
-			var yun = (map.right[off.index] == 0) ? 0 : parseInt(Range.linearMapping(x1, x2, y1, y2, tSec)(xun));
+			var yun = (map.right[off.index] == 0) ? 0 : parseInt(tools.linearMapping(x1, x2, y1, y2, tSec)(xun));
 			return yun;
 		}
+	},
+	showline: function() {
+		var $range = this.$range;
+		var $line = this.$line;
+		var select = this.data.select;
+		$range.on("change", function(event) {
+			$line.offset({
+				"left": select.sf
+			});
+			$line.width(Math.abs(select.sb - select.sf));
+		});
 	}
 };
 IrrRange.tools = {
@@ -193,5 +205,7 @@ IrrRange.tools = {
 	}
 };
 
-new IrrRange("#irr-range");
+var irr1 = new IrrRange("#irr-range1");
+var irr2 = new IrrRange("#irr-range2");
+irr2.appointRange([50,2000]);
 

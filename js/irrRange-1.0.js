@@ -238,7 +238,7 @@ $shouFuRange.on("change", function(event, args) {
 //设置默认范围
 window.onload = function() {
 	//设置月供默认范围
-	var argsm = Shou.appointRange(1000, 20000);
+	var argsm = Shou.appointRange(10, 200);
 	shouDoM(argsm);
 };
 
